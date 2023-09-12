@@ -13,7 +13,7 @@ public enum NetworkError: Error {
 
 // MARK: - NetworkManager Class
 public class NetworkManager {
-    public let session: URLSession
+    private let session: URLSession
     
     public init() {
         let configuration = URLSessionConfiguration.default
