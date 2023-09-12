@@ -60,7 +60,7 @@ fileprivate func exampleUsage() async {
 
     do {
         let countryName = "Aruba" // Replace with the actual country name you want to search
-        let response = try await networkManager.performRequest(.searchCountryByName(countryName))
+        let response = try await networkManager.getNetworkResponse(.searchCountryByName(countryName))
         print(response)
     } catch {
         print("Error: \(error)")
