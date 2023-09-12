@@ -15,7 +15,7 @@ public enum NetworkError: Error {
 public class NetworkManager {
     private let session: URLSession
     
-    init() {
+    public init() {
         let configuration = URLSessionConfiguration.default
         session = URLSession(configuration: configuration)
     }
