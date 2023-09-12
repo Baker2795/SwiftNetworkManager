@@ -13,14 +13,14 @@ public enum NetworkError: Error {
 
 // MARK: - NetworkManager Class
 public class NetworkManager {
-    private let session: URLSession
+    public let session: URLSession
     
     public init() {
         let configuration = URLSessionConfiguration.default
         session = URLSession(configuration: configuration)
     }
     
-    public func performRequest<ResponseType: NetworkResponse>(_ request: NetworkRequest<ResponseType>) async throws -> ResponseType {
+    public func getNetworkResponse<ResponseType: NetworkResponse>(_ request: NetworkRequest<ResponseType>) async throws -> ResponseType {
         var urlRequest = URLRequest(url: request.url)
         urlRequest.httpMethod = request.method.rawValue
         urlRequest.allHTTPHeaderFields = request.headers
@@ -39,6 +39,15 @@ public class NetworkManager {
             print(error)
             throw NetworkError.decodingError(error)
         }
+    }
+    
+    public func performBasicRequest<ResponseType: NetworkResponse>(_ request: NetworkRequest<ResponseType>) async throws -> (Data, URLResponse) {
+        var urlRequest = URLRequest(url: request.url)
+        urlRequest.httpMethod = request.method.rawValue
+        urlRequest.allHTTPHeaderFields = request.headers
+        urlRequest.httpBody = request.body
+        
+        return try await session.data(for: urlRequest)
     }
 }
 
