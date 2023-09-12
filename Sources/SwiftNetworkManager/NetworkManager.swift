@@ -20,7 +20,7 @@ public class NetworkManager {
         session = URLSession(configuration: configuration)
     }
     
-    func performRequest<ResponseType: NetworkResponse>(_ request: NetworkRequest<ResponseType>) async throws -> ResponseType {
+    public func performRequest<ResponseType: NetworkResponse>(_ request: NetworkRequest<ResponseType>) async throws -> ResponseType {
         var urlRequest = URLRequest(url: request.url)
         urlRequest.httpMethod = request.method.rawValue
         urlRequest.allHTTPHeaderFields = request.headers

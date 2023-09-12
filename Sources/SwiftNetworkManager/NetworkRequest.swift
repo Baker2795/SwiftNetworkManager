@@ -7,10 +7,10 @@
 import Foundation
 
 public struct NetworkRequest<ResponseType: NetworkResponse> {
-    let method: HTTPMethod
-    let url: URL
-    var headers: [String: String]?
-    var body: Data?
+    public let method: HTTPMethod
+    public let url: URL
+    public var headers: [String: String]?
+    public var body: Data?
 }
 
 public extension NetworkRequest {
