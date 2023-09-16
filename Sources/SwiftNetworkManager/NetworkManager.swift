@@ -41,6 +41,24 @@ public class NetworkManager {
         }
     }
     
+    public func checkForValidNetworkResponse<ResponseType: NetworkResponse>(_ request: NetworkRequest<ResponseType>) async -> Bool {
+        var urlRequest = URLRequest(url: request.url)
+        urlRequest.httpMethod = request.method.rawValue
+        urlRequest.allHTTPHeaderFields = request.headers
+        urlRequest.httpBody = request.body
+        
+        do {
+            let (_, response) = try await session.data(for: urlRequest)
+            if let httpResponse = response as? HTTPURLResponse {
+                return (200...299).contains(httpResponse.statusCode)
+            } else {
+                return false
+            }
+        } catch {
+            return false
+        }
+    }
+    
     public func performBasicRequest<ResponseType: NetworkResponse>(_ request: NetworkRequest<ResponseType>) async throws -> (Data, URLResponse) {
         var urlRequest = URLRequest(url: request.url)
         urlRequest.httpMethod = request.method.rawValue
