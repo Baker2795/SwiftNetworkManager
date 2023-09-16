@@ -41,7 +41,7 @@ public class NetworkManager {
         }
     }
     
-    public func checkForValidNetworkResponse<ResponseType: NetworkResponse>(_ request: NetworkRequest<ResponseType>) async -> Bool {
+    public func getHTTPResponseCode<ResponseType: NetworkResponse>(_ request: NetworkRequest<ResponseType>) async -> Int {
         var urlRequest = URLRequest(url: request.url)
         urlRequest.httpMethod = request.method.rawValue
         urlRequest.allHTTPHeaderFields = request.headers
@@ -50,12 +50,12 @@ public class NetworkManager {
         do {
             let (_, response) = try await session.data(for: urlRequest)
             if let httpResponse = response as? HTTPURLResponse {
-                return (200...299).contains(httpResponse.statusCode)
+                return httpResponse.statusCode
             } else {
-                return false
+                return 0
             }
         } catch {
-            return false
+            return 0
         }
     }
     
