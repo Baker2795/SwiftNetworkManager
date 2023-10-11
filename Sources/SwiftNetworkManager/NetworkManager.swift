@@ -9,6 +9,7 @@ import Foundation
 public enum NetworkError: Error {
     case httpError(statusCode: Int)
     case decodingError(Error)
+    case other(String)
 }
 
 // MARK: - NetworkManager Class
